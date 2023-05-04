@@ -26,7 +26,7 @@ public class PeopleController {
     public DoobleOne findOne(@PathVariable("id")int id) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "https://reqres.in//api/users/2";
+        String url = "https://reqres.in//api/users/" + id;
 
         return restTemplate.getForObject(url, DoobleOne.class);
     }
