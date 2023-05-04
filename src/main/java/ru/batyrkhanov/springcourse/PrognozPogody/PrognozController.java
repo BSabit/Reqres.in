@@ -11,112 +11,59 @@ public class PrognozController {
 
     @GetMapping("/astana")
     public Response findAstana() {
-    RestTemplate restTemplate = new RestTemplate();
+        return RestTemp("http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=ASTANA");
+    }
 
-    String url = "http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=ASTANA";
-
-        Root root = restTemplate.getForObject(url, Root.class);
-
-
-        Response response = new Response(root.getLocation().getCountry(), root.getLocation().getName(),
-                root.getLocation().getLocaltime(), root.getCurrent().getTemp_c());
-
-
-    return response;
-}
 
     @GetMapping("/almaty")
     public Response findAlmaty() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=ALMATY&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-        Root root = restTemplate.getForObject(url, Root.class);
-
-
-        Response response = new Response(root.getLocation().getCountry(), root.getLocation().getName(),
-                root.getLocation().getLocaltime(), root.getCurrent().getTemp_c());
-
-
-        return response;
+       return RestTemp("http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=ALMATY");
     }
 
     @GetMapping("/aktau")
     public Response findAktau() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=AKTAU&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-        Root root = restTemplate.getForObject(url, Root.class);
-
-
-        Response response = new Response(root.getLocation().getCountry(), root.getLocation().getName(),
-                root.getLocation().getLocaltime(), root.getCurrent().getTemp_c());
-
-
-        return response;
+       return RestTemp("http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=AKTAU");
     }
 
     @GetMapping("/shymkent")
     public Response findShymkent() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=SHYMKENT&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-        Root root = restTemplate.getForObject(url, Root.class);
-
-
-        Response response = new Response(root.getLocation().getCountry(), root.getLocation().getName(),
-                root.getLocation().getLocaltime(), root.getCurrent().getTemp_c());
-
-
-        return response;
+        return RestTemp("http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q=SHYMKENT");
     }
 
 
 
     @GetMapping("/astana/{id}")
      public Root findAstanaId(@PathVariable("id") int id) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Astana&days="
-                + id + "&aqi=no&alerts=no&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-
-        return restTemplate.getForObject(url, Root.class);
+        return RestTemp2("http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Astana&days=" + id);
         }
 
     @GetMapping("/almaty/{id}")
     public Root findAlmatyId(@PathVariable("id") int id) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Almaty&days="
-                + id + "&aqi=no&alerts=no&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-
-        return restTemplate.getForObject(url, Root.class);
+        return RestTemp2("http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Almaty&days=" + id);
     }
 
     @GetMapping("/aktau/{id}")
     public Root findAktauId(@PathVariable("id") int id) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Aktau&days="
-                + id + "&aqi=no&alerts=no&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-
-        return restTemplate.getForObject(url, Root.class);
+        return RestTemp2("http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Aktau&days=" + id);
     }
 
     @GetMapping("/shymkent/{id}")
     public Root findShymkentId(@PathVariable("id") int id) {
+        return RestTemp2("http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Shymkent&days=" + id);
+    }
+
+
+    public Response RestTemp(String http) {
         RestTemplate restTemplate = new RestTemplate();
+        Root root = restTemplate.getForObject(http, Root.class);
+        assert root != null;
+        return new Response(root.getLocation().getCountry(), root.getLocation().getName(),
+                root.getLocation().getLocaltime(), root.getCurrent().getTemp_c());
+    }
 
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q=Shymkent&days="
-                + id + "&aqi=no&alerts=no&aqi=c33f9d7ea0ef4ce6b19161711230405";
-
-
-        return restTemplate.getForObject(url, Root.class);
+    public Root RestTemp2(String http) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(http, Root.class);
     }
     }
 
