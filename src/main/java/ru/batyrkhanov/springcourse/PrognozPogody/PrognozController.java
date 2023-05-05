@@ -11,7 +11,7 @@ import java.util.Locale;
 @RequestMapping("/prognoz")
 public class PrognozController {
     @GetMapping("/{city}")
-    public Response findAstana(@PathVariable("city") String city) {
+    public Response findCity(@PathVariable("city") String city) {
         RestTemplate restTemplate = new RestTemplate();
         Root root = restTemplate.getForObject("http://api.weatherapi.com/v1/current.json?key=c33f9d7ea0ef4ce6b19161711230405&q="
                 + city.toUpperCase(), Root.class);
@@ -21,7 +21,7 @@ public class PrognozController {
     }
 
     @GetMapping("/{city}/{id}")
-     public Root findAstanaId(@PathVariable("city") String city, @PathVariable("id") int id) {
+     public Root findCityId(@PathVariable("city") String city, @PathVariable("id") int id) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject("http://api.weatherapi.com/v1/forecast.json?key=c33f9d7ea0ef4ce6b19161711230405&q="
                 + city.toUpperCase() + "&days=" + id, Root.class);
